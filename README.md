@@ -96,7 +96,11 @@ Frontend refreshes student table
 | Orchestration    | Docker Compose     |
 
 ---
+## 📸 System Preview
 
+![System Workspace Screenshot](./workspace_preview.jpg)
+
+---
 # 📂 Project Structure
 
 ```text
