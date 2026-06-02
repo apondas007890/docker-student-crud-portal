@@ -1,5 +1,3 @@
-## ✅ Complete README.md - Final Version
-
 ```markdown
 # 🎓 Global Institute - Dockerized Student Information System
 
