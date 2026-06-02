@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # --- DATABASE SERVICE ---
+  database:
+    # Use the official MongoDB image from Docker Hub
+    image: mongo:6.0
+    container_name: student_db
+    # Restart the container automatically unless explicitly stopped
+    restart: always
+    # Expose MongoDB's default port internally to other containers
+    ports:
+      - "27017:27017"
+    # Persist data on your Fedora machine so your students aren't deleted when the container stops
+    volumes:
+      - mongo_data:/data/db
+
+  # --- BACKEND API SERVICE ---
+  backend:
+    # Tell Docker to look inside the /backend folder for the Dockerfile
+    build: ./backend
+    container_name: student_backend
+    # Restart automatically if the backend crashes
+    restart: always
+    # Map port 5000 on your Fedora host to port 5000 inside this container
+    ports:
+      - "5000:5000"
+    # Environment variables passed into the container Node.js application
+    environment:
+      - MONGO_URI=mongodb://database:27017/school
+      - PORT=5000
+    # CRITICAL FOR NO-LOCAL-INSTALL: 
+    # This mounts your local backend folder to the container's app folder.
+    # It allows live-reloading (nodemon) to work instantly when you edit code.
+    volumes:
+      - ./backend:/usr/src/app
+      # Prevents the local machine from overriding the container's internal node_modules
+      - /usr/src/app/node_modules
+    # Ensure the database starts up completely before the backend tries to connect to it
+    depends_on:
+      - database
+
+  # --- FRONTEND SERVICE ---
+  frontend:
+    # Tell Docker to look inside the /frontend folder for its Dockerfile
+    build: ./frontend
+    container_name: student_frontend
+    restart: always
+    # Map port 8080 on your Fedora host to port 80 (standard HTTP) inside Nginx
+    ports:
+      - "8080:80"
+    # Mount local frontend files so any HTML/CSS changes reflect in your browser instantly
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+
+# Named volumes persist data beyond the lifecycle of containers
+volumes:
+  mongo_data:

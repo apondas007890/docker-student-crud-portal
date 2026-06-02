@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Institute | Student Information System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <nav class="bg-slate-900 text-white px-8 py-4 flex justify-between items-center shadow-md">
+        <div class="flex items-center space-x-3">
+            <div class="bg-amber-500 p-2 rounded-lg text-slate-900 font-bold text-lg">🎓</div>
+            <div>
+                <h1 class="text-xl font-bold tracking-wide">GLOBAL INSTITUTE</h1>
+                <p class="text-xs text-slate-400">Student Information Portal</p>
+            </div>
+        </div>
+        <span class="text-sm bg-slate-800 px-4 py-1.5 rounded-full text-slate-300 border border-slate-700">Dev Mode (Docker Instance)</span>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-fit">
+            <h2 id="form-title" class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <span class="w-2 h-5 bg-amber-500 rounded-full"></span> Register New Student
+            </h2>
+            <form id="student-form" class="space-y-4">
+                <input type="hidden" id="mongo-id">
+                
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Student Institutional ID</label>
+                    <input type="text" id="studentId" required placeholder="e.g. GI-2026-089" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Full Name</label>
+                    <input type="text" id="name" required placeholder="John Doe" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Institutional Email Address</label>
+                    <input type="email" id="email" required placeholder="j.doe@globalinstitute.edu" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Academic Faculty / Department</label>
+                    <select id="department" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900 transition">
+                        <option value="">Select Faculty...</option>
+                        <option value="School of Computing">School of Computing</option>
+                        <option value="Faculty of Engineering">Faculty of Engineering</option>
+                        <option value="Business School">Business School</option>
+                        <option value="Department of Sciences">Department of Sciences</option>
+                    </select>
+                </div>
+                
+                <div class="pt-2 flex gap-2">
+                    <button type="submit" id="submit-btn" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-medium py-2.5 px-4 rounded-xl transition shadow-sm">Save Student Profile</button>
+                    <button type="button" id="cancel-btn" class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2.5 px-4 rounded-xl transition">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="lg:grid-cols-1 lg:col-span-2 space-y-6">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex items-center gap-3">
+                <span class="text-xl pl-2 text-slate-400">🔍</span>
+                <input type="text" id="search-input" placeholder="Search global registry instantly by ID or Name..." class="w-full py-1 text-slate-700 focus:outline-none text-base">
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                    <h3 class="font-bold text-slate-900 tracking-wide">Active Student Roster</h3>
+                    <span id="student-count" class="text-xs bg-slate-200 px-2.5 py-1 rounded-md font-semibold text-slate-700">0 Registered</span>
+                </div>
+                
+                <div id="students-list" class="divide-y divide-slate-100 max-h-[550px] overflow-y-auto">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
